@@ -176,7 +176,7 @@ app.post("/tournaments/delete", [auth.verify], async (req, res) => {
   }
 });
 
-app.get("/tournaments", [auth.verify], async (req, res) => {
+app.get("/tournaments", async (req, res) => {
   try {
     let db = await connect();
     let tournaments = await db.collection("Tournaments").find({});
