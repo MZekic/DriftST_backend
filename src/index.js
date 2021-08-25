@@ -21,6 +21,9 @@ app.get("/tajna", [auth.verify], async (req, res) => {
   // nakon što se izvrši auth.verify middleware, imamo dostupan req.jwt objekt
   res.status(200).send("tajna korisnika " + req.jwt.username);
 });
+app.get("/", async (req, res) => {
+  res.send(("DAWDJOI KEROKU"))
+});
 
 Array.prototype.shuffle = function () {
   var i = this.length,
