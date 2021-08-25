@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "Instaclone backend",
   "main": "src/index.js",
-  "type":"module",
   "scripts": {
     "serve": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",

@@ -44,7 +44,7 @@ export default {
         let user = await db.collection('users').findOne({ username: username });
         if (user && user.password && (await bcrypt.compare(password, user.password))) {
             delete user.password; // ne želimo u tokenu, token se sprema na klijentu
-            let token = jwt.sign(user, tajna_env, {
+            let token = jwt.sign(user, process.env.JWT_SECRET, {
                 algorithm: 'HS512',
                 expiresIn: '1 week',
             });
@@ -87,7 +87,7 @@ export default {
                 } else {
                     let token = authorization[1];
                     // spremi uz upit, verify baca grešku(exception) ako ne uspije
-                    req.jwt = jwt.verify(token, tajna_env);
+                    req.jwt = jwt.verify(token, process.env.JWT_SECRET);
                     return next();
                 }
             } catch (err) {
