@@ -3,7 +3,7 @@ import cors from "cors";
 import connect from "./db.js";
 import { ObjectId } from "mongodb";
 import auth from "./auth";
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
 const port = 3000; // port na kojem će web server slušati
 app.use(bodyParser.json()); // to support JSON-encoded bodies
