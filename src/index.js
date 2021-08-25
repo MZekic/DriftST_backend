@@ -1,11 +1,8 @@
-import jwt from "jsonwebtoken";
 import express from "express";
 import cors from "cors";
 import connect from "./db.js";
-import mongo from "mongodb";
 import { ObjectId } from "mongodb";
 import auth from "./auth";
-import db from "./db.js";
 const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
 const port = 3000; // port na kojem će web server slušati
