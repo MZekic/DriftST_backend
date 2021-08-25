@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 import mongo from 'mongodb';
 import connect from './db.js';
 import bcrypt from 'bcrypt';
