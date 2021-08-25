@@ -1,4 +1,3 @@
-if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 import jwt from "jsonwebtoken";
 import express from "express";
 import cors from "cors";
