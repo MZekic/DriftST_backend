@@ -11,7 +11,7 @@ let client = new mongo.MongoClient(connection_string, {
 let db = null;
 
 // eksportamo Promise koji resolva na konekciju
-export default () => {
+module.exports = () => {
     return new Promise((resolve, reject) => {
         // ako smo inicijalizirali bazu i klijent je još uvijek spojen
         if (db && client.isConnected()) {

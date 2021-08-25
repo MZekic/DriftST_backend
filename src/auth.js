@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import connect from './db.js';
+// import connect from './db.js';
+
+const connect = require ('./db.js');
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const bcrypt = require ('bcrypt');
 
 // Kreiranje indeksa pri pokretanju aplikacije (ukoliko već ne postoji)
@@ -12,7 +14,7 @@ const bcrypt = require ('bcrypt');
     db.collection('users').createIndex({ username: 1 }, { unique: true });
 })();
 
-export default {
+module.exports = {
     async registerUser(userData) {
         let db = await connect();
 
