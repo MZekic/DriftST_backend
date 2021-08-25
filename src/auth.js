@@ -1,7 +1,12 @@
-import mongo from 'mongodb';
-import connect from './db.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+
+// import connect from './db.js';
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken';
+
+const connect = require ('mongodb')
+const bcrypt = require ('bcrypt')
+const jwt = require ('jwt')
+
 
 // Kreiranje indeksa pri pokretanju aplikacije (ukoliko već ne postoji)
 (async () => {

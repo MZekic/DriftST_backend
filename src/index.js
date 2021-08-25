@@ -1,8 +1,12 @@
 const express = require ('express')
-import cors from "cors";
-import connect from "./db.js";
-import { ObjectId } from "mongodb";
-import auth from "./auth";
+const cors = require ('cors')
+const connect = require ('./db.js')
+const {ObjectId} = require ('mongodb')
+const auth = require ('./auth')
+// import cors from "cors";
+// import connect from "./db.js";
+// import { ObjectId } from "mongodb";
+// import auth from "./auth";
 const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
 const port = 3000; // port na kojem će web server slušati
