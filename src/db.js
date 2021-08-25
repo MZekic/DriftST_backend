@@ -1,4 +1,3 @@
-// import mongo from 'mongodb';
 const mongo = require('mongodb')
 
 

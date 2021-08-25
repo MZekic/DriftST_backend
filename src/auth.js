@@ -1,9 +1,4 @@
-
-// import connect from './db.js';
-
 const connect = require ('./db.js');
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
 const jwt = require('jsonwebtoken');
 const bcrypt = require ('bcrypt');
 

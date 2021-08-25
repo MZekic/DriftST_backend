@@ -3,11 +3,6 @@ const express = require('express')
 const cors = require ('cors')
 const connect = require ('./db.js')
 const auth = require ('./auth')
-
-// import express from "express";
-// import cors from "cors";
-// import connect from "./db.js";
-// import auth from "./auth";
 const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
 const port = 3000; // port na kojem će web server slušati
