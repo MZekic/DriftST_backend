@@ -1,5 +1,4 @@
-// import mongo from 'mongodb';
-const mongo = require ('mongodb')
+import mongo from 'mongodb';
 
 
 let connection_string = 'mongodb+srv://Martin:xwNIRlNSp3eZmQNb@cluster0.s28bq.mongodb.net/dbDrift?retryWrites=true&w=majority';

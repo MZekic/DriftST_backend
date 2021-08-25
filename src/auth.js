@@ -1,12 +1,10 @@
-
-// import connect from './db.js';
+import dotenv from 'dotenv';
+dotenv.config();
+import connect from './db.js';
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
-
-const connect = require ('mongodb')
-const bcrypt = require ('bcrypt')
-const jwt = require ('jwt')
-
+const jwt = require('jsonwebtoken')
+const bcrypt = require ('bcrypt');
 
 // Kreiranje indeksa pri pokretanju aplikacije (ukoliko već ne postoji)
 (async () => {
