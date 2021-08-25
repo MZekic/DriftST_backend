@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+
 // import connect from './db.js';
 
 const connect = require ('./db.js');
@@ -49,7 +48,7 @@ module.exports = {
         let user = await db.collection('users').findOne({ username: username });
         if (user && user.password && (await bcrypt.compare(password, user.password))) {
             delete user.password; // ne želimo u tokenu, token se sprema na klijentu
-            let token = jwt.sign(user, process.env.JWT_SECRET, {
+            let token = jwt.sign(user, 'tajna_env', {
                 algorithm: 'HS512',
                 expiresIn: '1 week',
             });
