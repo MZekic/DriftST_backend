@@ -1,7 +1,7 @@
 {
   "name": "instaclone-back",
   "version": "1.0.0",
-  "description": "Instaclone backend",
+  "description": "Driftst backend",
   "main": "src/index.js",
   "scripts": {
     "serve": "nodemon --exec babel-node src/index.js",

@@ -1,4 +1,4 @@
-import express from "express";
+const express = require ('express')
 import cors from "cors";
 import connect from "./db.js";
 import { ObjectId } from "mongodb";
