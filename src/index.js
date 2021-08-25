@@ -5,7 +5,7 @@ const connect = require ('./db.js')
 const auth = require ('./auth')
 const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
-const PORT = process.env.PORT || 3000; // port na kojem će web server slušati
+const PORT = process.env.PORT || 80; // port na kojem će web server slušati
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
   bodyParser.urlencoded({
