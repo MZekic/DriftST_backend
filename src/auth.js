@@ -20,7 +20,8 @@ module.exports = {
                 // lozinku ćemo hashirati pomoću bcrypta
                 password: await bcrypt.hash(userData.password, 8),
                 name: userData.name,
-                category: userData.selected
+                category: userData.selected,
+                wins: 0
             };
 
             result = await db.collection('users').insertOne(doc);
@@ -45,7 +46,7 @@ module.exports = {
             delete user.password; // ne želimo u tokenu, token se sprema na klijentu
             let token = jwt.sign(user, 'tajna_env', {
                 algorithm: 'HS512',
-                expiresIn: '1 week',
+                expiresIn: '1 day',
             });
             console.log(token)
            
@@ -86,7 +87,7 @@ module.exports = {
                 } else {
                     let token = authorization[1];
                     // spremi uz upit, verify baca grešku(exception) ako ne uspije
-                    req.jwt = jwt.verify(token, process.env.JWT_SECRET);
+                    req.jwt = jwt.verify(token, 'tajna_env');
                     return next();
                 }
             } catch (err) {

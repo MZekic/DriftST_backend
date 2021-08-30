@@ -1,11 +1,12 @@
-const ObjectId = require('mongodb').ObjectID
-const express = require('express')
-const cors = require ('cors')
-const connect = require ('./db.js')
-const auth = require ('./auth')
+const ObjectId = require("mongodb").ObjectID;
+const express = require("express");
+const cors = require("cors");
+const connect = require("./db.js");
+const auth = require("./auth");
 const bodyParser = require("body-parser");
 const app = express(); // instanciranje aplikacije
-const PORT = process.env.PORT || 80; // port na kojem će web server slušati
+const PORT = 3000; // port na kojem će web server slušati
+// const PORT = process.env.PORT || 80; // port na kojem će web server slušati
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
   bodyParser.urlencoded({
@@ -20,9 +21,6 @@ app.use(express.json()); // automatski dekodiraj JSON poruke
 app.get("/tajna", [auth.verify], async (req, res) => {
   // nakon što se izvrši auth.verify middleware, imamo dostupan req.jwt objekt
   res.status(200).send("tajna korisnika " + req.jwt.username);
-});
-app.get("/", async (req, res) => {
-  res.send(("DAWDJOI KEROKU"))
 });
 
 Array.prototype.shuffle = function () {
@@ -39,13 +37,13 @@ Array.prototype.shuffle = function () {
   return this;
 };
 
-app.post("/user/changepassword",[auth.verify], async (req, res) => {
+app.post("/user/changepassword", [auth.verify], async (req, res) => {
   let changes = req.body;
-  console.log(changes)
-  let username = req.jwt.username
+
+  let username = req.jwt.username;
   if (changes.new_password && changes.old_password) {
     let result = await auth.changeUserPassword(
-      username, 
+      username,
       changes.old_password,
       changes.new_password
     );
@@ -64,7 +62,7 @@ app.post("/auth", async (req, res) => {
   let username = user.username;
   let password = user.password;
 
-  console
+  console;
 
   try {
     let result = await auth.authenticateUser(username, password);
@@ -78,10 +76,10 @@ app.post("/auth", async (req, res) => {
 
 app.post("/user", async (req, res) => {
   let user = req.body;
-  console.log(user);
+
   try {
     let result = await auth.registerUser(user);
-    console.log(result)
+
     res.status(201).json(result);
   } catch (e) {
     res.status(500).json({
@@ -90,23 +88,11 @@ app.post("/user", async (req, res) => {
   }
 });
 
+
 app.get("/users", [auth.verify], async (req, res) => {
   try {
-   
     let db = await connect();
-    let users = await db.collection("users").find({});
-    let results = await users.toArray();
-    res.json(results);
-  } catch (e) {
-    res.status(500).json({
-      error: e.message,
-    });
-  }
-});
-app.get("/users/", [auth.verify], async (req, res) => {
-  try {
-    let db = await connect();
-    let users = await db.collection("users").find({});
+    let users = await db.collection("users").find({}).sort({wins: -1});
     let results = await users.toArray();
     res.json(results);
   } catch (e) {
@@ -128,7 +114,7 @@ app.post("/tournaments/create", [auth.verify], async (req, res) => {
 
 app.post("/tournaments/join", [auth.verify], async (req, res) => {
   let db = await connect();
-  console.log(req.body);
+
   await db
     .collection("Tournaments")
     .updateOne(
@@ -154,18 +140,16 @@ app.post("/tournaments/join", [auth.verify], async (req, res) => {
           round4: ["", "", "", ""],
           round2: ["", ""],
           round1: [""],
+          status: "active"
         },
       }
     );
-
-    console.log(competitors);
   }
 });
 
 app.post("/tournaments/delete", [auth.verify], async (req, res) => {
   let db = await connect();
   try {
-    console.log(req.body._id);
     let id = req.body._id;
     tournament = await db
       .collection("Tournaments")
@@ -176,7 +160,7 @@ app.post("/tournaments/delete", [auth.verify], async (req, res) => {
   }
 });
 
-app.get("/tournaments", async (req, res) => {
+app.get("/tournaments", [auth.verify], async (req, res) => {
   try {
     let db = await connect();
     let tournaments = await db.collection("Tournaments").find({});
@@ -202,7 +186,6 @@ app.get("/tournaments/statistics", [auth.verify], async (req, res) => {
       },
     ]);
     let results = await statistics.toArray();
-    console.log(results);
 
     res.json(results);
   } catch (e) {
@@ -213,14 +196,14 @@ app.get("/tournaments/statistics", [auth.verify], async (req, res) => {
 });
 
 app.get("/myProfile/:id", [auth.verify], async (req, res) => {
-  try { 
+  try {
     let db = await connect();
     let id = req.params.id;
-    console.log(id)
-    
-    let statistics = await db.collection("Tournaments").find({ competitors: {$all : [id]} }).toArray()
-   
-    console.log("stats", statistics);
+
+    let statistics = await db
+      .collection("Tournaments")
+      .find({ competitors: { $all: [id] } })
+      .toArray();
 
     res.json(statistics);
   } catch (e) {
@@ -237,7 +220,7 @@ app.get("/brackets/:id", [auth.verify], async (req, res) => {
     let competitors = await db
       .collection("Tournaments")
       .findOne({ _id: ObjectId(id) });
-
+    
     res.json(competitors);
   } catch (e) {
     res.status(500).json({
@@ -251,6 +234,7 @@ app.post("/brackets/win", [auth.verify], async (req, res) => {
   let index = req.body.index;
   let round = req.body.round;
   let db = await connect();
+  
   let winner = await db
     .collection("Tournaments")
     .findOne({ _id: ObjectId(id) });
@@ -263,11 +247,27 @@ app.post("/brackets/win", [auth.verify], async (req, res) => {
       },
     }
   );
-  let save = await db
-  .collection("Tournaments")
-  .findOne({ _id: ObjectId(id) });
-  res.json(save)
+  let save = await db.collection("Tournaments").findOne({ _id: ObjectId(id) });
+  res.json(save);
+});
 
+app.post("/brackets/winner", [auth.verify], async (req, res) => {
+  let username = req.body.username;
+  let id = req.body.id;
+
+  let db = await connect();
+
+  await db.collection("users").findOneAndUpdate({ username: username }, { $inc: { wins: 1 } });
+
+  console.log(id);
+  await db.collection("Tournaments").findOne({ _id: ObjectId(id) });
+
+  await db.collection("Tournaments").findOneAndUpdate(
+    { _id: ObjectId(id) },
+    {
+      $set: { status: "inactive" },
+    }
+  );
 });
 
 app.listen(PORT, () => console.log(`Slušam na portu ${PORT}!`));
